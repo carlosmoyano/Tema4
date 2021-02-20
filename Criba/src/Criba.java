@@ -56,7 +56,7 @@ public class Criba {
 		int vector[] = new int[dato];
 		System.out.println("\nVector inicial hasta: " + dato);
 		for (int i=0; i<vector.length; i++) {
-			if(i%10==0) System.out.println();
+			//if(i%10==0) System.out.println();
 			System.out.print(i+1+"  ");
 		}
 		vector=generarPrimos(dato);
@@ -68,4 +68,4 @@ public class Criba {
 	}//main
 
 }//Class Criba
-//Prueba
+//Branch2
