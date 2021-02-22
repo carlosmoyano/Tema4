@@ -1,4 +1,5 @@
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Criba {
@@ -73,11 +74,7 @@ public class Criba {
 		}
 	}
 	
-	public static void mostrarvprimos(int [] vector) {
-		for (int i= 0; i<vector.length; i++){
-			System.out.print(vector[i]+"  ");
-		}
-	}
+	
 	
 	public static void main(String[] args) {
 		Scanner teclado = new Scanner(System.in);
@@ -88,7 +85,8 @@ public class Criba {
 		mostrarVector (vector);
 		vector=generarPrimos(dato);
 		System.out.println("\nVector de primos hasta: " + dato);
-		mostrarvprimos(vector);
+		System.out.println(Arrays.toString(vector));
+		
 		teclado.close();
 	}//main
 	
