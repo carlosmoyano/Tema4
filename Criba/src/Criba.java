@@ -1,71 +1,98 @@
+
 import java.util.Scanner;
 
 public class Criba {
 
+	private static boolean [] preparaBooleanarray(int max){
+		int dim = max +1;
+		boolean[] esPrimo= new boolean[dim];
+		
+		for (int i=0; i<dim; i++) {
+			esPrimo[i]=true;
+		}
+		esPrimo[0]= esPrimo[1] = false;
+		return esPrimo;
+		
+	}
+	
+	private static int cuentaPrimos (boolean[] v){
+		int cuenta = 0;
+		for (int i=0; i<v.length;i++) {
+			if (v[i]) {
+				cuenta++;
+			}
+		}
+		return cuenta;
+	}
+	
+	private static boolean [] criba (boolean [] v) {
+		for (int i=2; i<Math.sqrt(v.length)+1;i++) {
+				if(v[i]) {
+					//Eliminar los múltiplos de i
+					for(int j=2*i; j<v.length; j+=i) {
+						v[j] = false;
+					}
+				}
+			}
+		return v;
+	}
+	
+	private static int [] array_primos (boolean [] v, int n_primos) {
+		int [] primos = new int[n_primos];
+		for (int i=0,j=0; i<v.length; i++) {
+			if (v[i]) {
+				primos[j++] = i;
+			}
+		}
+		return primos;
+	}
+	
 	//Generar números primos de 1 a max
 	public static int[] generarPrimos (int max) {
 		
 		int i,j;
 		if (max >=2) {
-			//Declaraciones
-			int dim = max +1;
-			boolean[] esPrimo= new boolean[dim];
-			//Inicializar el array
-			for (i=0; i<dim; i++) {
-				esPrimo[i]=true;
-			}
-			//Eliminar el 0 y el 1 que no son primos
-			esPrimo[0]= esPrimo[1] = false;
-			//Criba
-			for (i=2; i<Math.sqrt(dim)+1;i++) {
-				if(esPrimo[i]) {
-					//Eliminar los múltiplos de i
-					for(j=2*i; j<dim; j+=i) {
-						esPrimo[j] = false;
-					}
-				}
-			}
-			//¿Cuantos primos hay?
-			int cuenta = 0;
-			for (i=0; i<dim;i++) {
-				if (esPrimo[i]) {
-					cuenta++;
-				}
-			}
 			
-			//Rellenar el vector de números primos
-			int [] primos = new int[cuenta];
-			for (i=0,j=0; i<dim; i++) {
-				if (esPrimo[i]) {
-					primos[j++] = i;
-				}
-			}
-			return primos;
+			boolean[] esPrimo = preparaBooleanarray(max);
+			int [] vector_primos;
 			
-		}else {//max<2
+			esPrimo = criba(esPrimo);
+			int n_primos = cuentaPrimos(esPrimo);
+			
+			return vector_primos = array_primos (esPrimo, n_primos) ;
+			
+		}else {
 			return new int[0];
-			//vector vacio.
 		}	
+		
+	}
+	
+	public static void mostrarVector(int []v) {
+		for (int i=0; i< v.length; i++) {
+			System.out.print(i+1 + "  " );
+		}
+	}
+	
+	public static void mostrarvprimos(int [] vector) {
+		for (int i= 0; i<vector.length; i++){
+			System.out.print(vector[i]+"  ");
+		}
 	}
 	
 	public static void main(String[] args) {
-		
 		Scanner teclado = new Scanner(System.in);
 		System.out.println("Introduce un número:");
 		int dato = teclado.nextInt();
 		int vector[] = new int[dato];
 		System.out.println("\nVector inicial hasta: " + dato);
-		for (int i=0; i<vector.length; i++) {
-			//if(i%10==0) System.out.println();
-			System.out.print(i+1+"  ");
-		}
+		mostrarVector (vector);
 		vector=generarPrimos(dato);
 		System.out.println("\nVector de primos hasta: " + dato);
-		for (int i= 0; i<vector.length; i++){
-			if(i%10==0) System.out.println();
-			System.out.print(vector[i]+"  ");
-		}
+		mostrarvprimos(vector);
+		teclado.close();
 	}//main
+	
+
 
 }//Class Criba
 //Branch2
