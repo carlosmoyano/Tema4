@@ -1,70 +1,129 @@
+/**
+ * Clase para generar números primos desde 1 hasta número solicitado al usuario.
+ * @author Carlos Moyano
+ * @version 1.0 03/03/2021
+ */
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Criba {
 
-	//Generar números primos de 1 a max
+	/**
+	 * Preparamosel array que nos servirá para calcular los primos
+	 * @param max Cantidad máxima de elementos introducida por el usuario
+	 * @return Vector de elementos boolean
+	 */
+	private static boolean [] preparaBooleanarray(int max){
+		int dim = max +1;
+		boolean[] esPrimo= new boolean[dim];
+		
+		for (int i=0; i<dim; i++) {
+			esPrimo[i]=true;
+		}
+		esPrimo[0]= esPrimo[1] = false;
+		return esPrimo;
+		
+	}
+	
+	/**
+	 * 
+	 * @param v Array de booleanos para contar los números primos
+	 * @return Cantidad de números primos.
+	 */
+	private static int cuentaPrimos (boolean[] v){
+		int cuenta = 0;
+		for (int i=0; i<v.length;i++) {
+			if (v[i]) {
+				cuenta++;
+			}
+		}
+		return cuenta;
+	}
+	
+	/**
+	 * 
+	 * @param v Array que recibe para hacer la criba de números primos
+	 * @return Array de booleanos
+	 */
+	private static boolean [] criba (boolean [] v) {
+		for (int i=2; i<Math.sqrt(v.length)+1;i++) {
+				if(v[i]) {
+					//Eliminar los múltiplos de i
+					for(int j=2*i; j<v.length; j+=i) {
+						v[j] = false;
+					}
+				}
+			}
+		return v;
+	}
+	
+	/**
+	 * 
+	 * @param v Array de booleanos para comprobar números primos
+	 * @param n_primos Cantidad de números primos
+	 * @return Array con los números primos
+	 */
+	private static int [] array_primos (boolean [] v, int n_primos) {
+		int [] primos = new int[n_primos];
+		for (int i=0,j=0; i<v.length; i++) {
+			if (v[i]) {
+				primos[j++] = i;
+			}
+		}
+		return primos;
+	}
+	
+	/**
+	 * Genera los números primos de 1 a max
+	 * @param max Número máximo de números primos
+	 * @return Array con los números primos
+	 */
 	public static int[] generarPrimos (int max) {
 		
 		int i,j;
 		if (max >=2) {
-			//Declaraciones
-			int dim = max +1;
-			boolean[] esPrimo= new boolean[dim];
-			//Inicializar el array
-			for (i=0; i<dim; i++) {
-				esPrimo[i]=true;
-			}
-			//Eliminar el 0 y el 1 que no son primos
-			esPrimo[0]= esPrimo[1] = false;
-			//Criba
-			for (i=2; i<Math.sqrt(dim)+1;i++) {
-				if(esPrimo[i]) {
-					//Eliminar los múltiplos de i
-					for(j=2*i; j<dim; j+=i) {
-						esPrimo[j] = false;
-					}
-				}
-			}
-			//¿Cuantos primos hay?
-			int cuenta = 0;
-			for (i=0; i<dim;i++) {
-				if (esPrimo[i]) {
-					cuenta++;
-				}
-			}
 			
-			//Rellenar el vector de números primos
-			int [] primos = new int[cuenta];
-			for (i=0,j=0; i<dim; i++) {
-				if (esPrimo[i]) {
-					primos[j++] = i;
-				}
-			}
-			return primos;
+			boolean[] esPrimo = preparaBooleanarray(max);
+			int [] vector_primos;
 			
-		}else {//max<2
+			esPrimo = criba(esPrimo);
+			int n_primos = cuentaPrimos(esPrimo);
+			
+			return vector_primos = array_primos (esPrimo, n_primos) ;
+			
+		}else {
 			return new int[0];
-			//vector vacio.
 		}	
+		
 	}
 	
+	/**
+	 * Método para imprimir un vector standar
+	 * @param v Array a imprimir en pantalla
+	 */
+	public static void mostrarVector(int []v) {
+		for (int i=0; i< v.length; i++) {
+			System.out.print(i+1 + "  " );
+		}
+	}
+	
+	
+	
 	public static void main(String[] args) {
-		
 		Scanner teclado = new Scanner(System.in);
 		System.out.println("Introduce un número:");
 		int dato = teclado.nextInt();
 		int vector[] = new int[dato];
 		System.out.println("\nVector inicial hasta: " + dato);
-		for (int i=0; i<vector.length; i++) {
-			if(i%10==0) System.out.println();
-			System.out.print(i+1+"  ");
-		}
+		mostrarVector (vector);
 		vector=generarPrimos(dato);
 		System.out.println("\nVector de primos hasta: " + dato);
-		for (int i= 0; i<vector.length; i++){
-			if(i%10==0) System.out.println();
-			System.out.print(vector[i]+"  ");
-		}
+		System.out.println(Arrays.toString(vector));
+		
+		teclado.close();
 	}//main
+	
+
 
 }//Class Criba
+//Branch3
