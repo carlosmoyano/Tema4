@@ -80,7 +80,7 @@ public class Criba {
 	 */
 	public static int[] generarPrimos (int max) {
 		
-		int i,j;
+		
 		if (max >=2) {
 			
 			boolean[] esPrimo = preparaBooleanarray(max);
